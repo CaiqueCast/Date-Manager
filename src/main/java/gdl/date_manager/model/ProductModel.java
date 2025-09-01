@@ -1,5 +1,6 @@
 package gdl.date_manager.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,7 +10,8 @@ import jakarta.persistence.ManyToOne;
 
 import java.util.Date;
 
-public class productModel {
+@Entity
+public class ProductModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

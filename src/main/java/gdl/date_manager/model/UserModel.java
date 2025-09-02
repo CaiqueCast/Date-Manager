@@ -16,6 +16,15 @@ public class UserModel {
     public UserModel() {
     }
 
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     public UserModel(String userName, String password) {
         this.userName = userName;
         this.password = password;

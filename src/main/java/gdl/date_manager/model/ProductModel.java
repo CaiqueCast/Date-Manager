@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class ProductModel {
@@ -16,7 +16,7 @@ public class ProductModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private Date validity;
+    private LocalDate validity;
     @ManyToOne
     @JoinColumn(name = "id_user", nullable = false, foreignKey = @ForeignKey(name = "FK_PRODUCT_USER"))
     private UserModel user;
@@ -24,7 +24,7 @@ public class ProductModel {
     public ProductModel() {
     }
 
-    public ProductModel(String name, Date validity, UserModel user) {
+    public ProductModel(String name, LocalDate validity, UserModel user) {
         this.name = name;
         this.validity = validity;
         this.user = user;
@@ -56,11 +56,11 @@ public class ProductModel {
         this.name = name;
     }
 
-    public Date getValidity() {
+    public LocalDate getValidity() {
         return validity;
     }
 
-    public void setValidity(Date validity) {
+    public void setValidity(LocalDate validity) {
         this.validity = validity;
     }
 

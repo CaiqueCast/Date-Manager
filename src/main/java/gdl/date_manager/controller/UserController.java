@@ -27,12 +27,12 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<UserModel> findAll(){
+    public List<UserModel> findAllUser(){
         return userRepository.findAll();
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<?> findById(@PathVariable Integer id) {
+    public ResponseEntity<?> findUserById(@PathVariable Integer id) {
         return userRepository.findById(id)
                 .<ResponseEntity<?>>map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity

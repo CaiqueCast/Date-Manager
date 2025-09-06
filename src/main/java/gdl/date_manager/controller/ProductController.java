@@ -42,7 +42,13 @@ public class ProductController {
 
         try {
 
-            int rows = productRepository.update(productModel.getName(), productModel.getValidity(), productModel.getUser().getId(), id);
+            int rows = productRepository.updateForOwner(
+                    productModel.getName(),
+                    productModel.getValidity(),
+                    productModel.getBarcode(),
+                    id,
+                    productModel.getUser().getId()
+            );
             if (rows > 0) {
                 return ResponseEntity.ok("Produto atualizado com sucesso!");
             } else if (!userRepository.existsById(productModel.getUser().getId())) {

@@ -10,21 +10,18 @@ public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @jakarta.validation.constraints.NotBlank
+    @jakarta.persistence.Column(unique = true, length = 64)
     private String userName;
+
+    @jakarta.validation.constraints.NotBlank
     private String password;
 
-    public UserModel() {
-    }
+    private String role = "ROLE_USER";
+    private boolean enabled = true;
 
-    @Override
-    public String toString() {
-        return "UserModel{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
-
+    public UserModel() {}
     public UserModel(String userName, String password) {
         this.userName = userName;
         this.password = password;
@@ -38,6 +35,14 @@ public class UserModel {
         this.id = id;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -46,11 +51,19 @@ public class UserModel {
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getRole() {
+        return role;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

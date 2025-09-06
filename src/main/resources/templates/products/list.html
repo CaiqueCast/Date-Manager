@@ -1,0 +1,76 @@
+<head>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 0; }
+        header, .container { padding: 16px; }
+        header { background: #0f172a; color: #fff; display:flex; justify-content:space-between; align-items:center;}
+        .btn { padding: 8px 12px; border: 0; border-radius: 8px; cursor: pointer; }
+        .btn-primary { background: #2563eb; color: #fff; }
+        .btn-ghost { background: transparent; color: #fff; }
+        .btn-danger { background: #dc2626; color: #fff; }
+        .badge { padding: 2px 8px; border-radius: 999px; font-size: 12px; }
+        .badge-warn { background: #f59e0b; color: #111827; }
+        .badge-danger { background: #ef4444; color: #fff; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border-bottom: 1px solid #e5e7eb; }
+        tr.soon { background: #fff7ed; }
+        tr.very-soon { background: #fef2f2; }
+        .toolbar { display:flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+        input[type="text"], input[type="date"] { padding: 8px; border:1px solid #cbd5e1; border-radius:8px; }
+        form.inline { display:inline; }
+    </style>
+</head>
+
+<div th:fragment="content">
+    <h1>Produtos</h1>
+    <div class="toolbar">
+        <form th:action="@{/products}" method="get" style="display:flex;gap:8px;">
+            <input type="text" name="q" th:value="${q}" placeholder="Buscar por nome ou código de barras" />
+            <button class="btn btn-primary">Buscar</button>
+            <a th:href="@{/products}" class="btn">Limpar</a>
+        </form>
+
+        <div style="margin-left:auto; display:flex; gap:8px;">
+            <a th:href="@{/products(filter='1m')}" class="btn">Vencem em 1 mês</a>
+            <a th:href="@{/products(filter='2m')}" class="btn">Vencem em 2 meses</a>
+            <a th:href="@{/products/new}" class="btn btn-primary">+ Novo Produto</a>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Código de barras</th>
+            <th>Validade</th>
+            <th>Faltam</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${products}"
+            th:classappend="${p.daysUntilExpiration} &lt;= 7 ? 'very-soon' : (${p.daysUntilExpiration} &lt;= 30 ? 'soon' : '')">
+            <td th:text="${p.name}">Nome</td>
+            <td th:text="${p.barcode}">7890000000000</td>
+            <td th:text="${#temporals.format(p.validity, 'dd/MM/yyyy')}"??/??/???</td>
+            <td>
+                <span th:if="${p.daysUntilExpiration &lt; 0}" class="badge badge-danger">Vencido</span>
+                <span th:if="${p.daysUntilExpiration &gt;= 0}"
+                      th:text="${p.daysUntilExpiration} + ' dia' + (${p.daysUntilExpiration}==1 ? '' : 's')"></span>
+                <span th:if="${p.daysUntilExpiration &gt;= 0 and p.daysUntilExpiration &lt;= 30}" class="badge badge-danger">⚠ em até 30 dias</span>
+                <span th:if="${p.daysUntilExpiration &gt; 7 and p.daysUntilExpiration &lt;= 60}" class="badge badge-warn">⚠ em até 60 dias</span>
+            </td>
+            <td>
+                <a th:href="@{|/products/${p.id}/edit|}" class="btn">Editar</a>
+                <form class="inline" th:action="@{|/products/${p.id}/delete|}" method="post"
+                      onsubmit="return confirm('Excluir este produto?');">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button class="btn btn-danger" type="submit">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(products)}">
+            <td colspan="5">Nenhum produto encontrado.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

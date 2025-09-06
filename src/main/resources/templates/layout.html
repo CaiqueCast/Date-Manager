@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${title} ?: 'Gerenciador de Datas'">Gerenciador de Datas</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 0; }
+        header, .container { padding: 16px; }
+        header { background: #0f172a; color: #fff; display:flex; justify-content:space-between; align-items:center;}
+        .btn { padding: 8px 12px; border: 0; border-radius: 8px; cursor: pointer; }
+        .btn-primary { background: #2563eb; color: #fff; }
+        .btn-ghost { background: transparent; color: #fff; }
+        .btn-danger { background: #dc2626; color: #fff; }
+        .badge { padding: 2px 8px; border-radius: 999px; font-size: 12px; }
+        .badge-warn { background: #f59e0b; color: #111827; }
+        .badge-danger { background: #ef4444; color: #fff; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border-bottom: 1px solid #e5e7eb; }
+        tr.soon { background: #fff7ed; }       /* <= 30 dias */
+        tr.very-soon { background: #fef2f2; }  /* vencendo em <= 7 dias */
+        .toolbar { display:flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+        input[type="text"], input[type="date"] { padding: 8px; border:1px solid #cbd5e1; border-radius:8px; }
+        form.inline { display:inline; }
+    </style>
+</head>
+<body>
+<header>
+    <div><strong>Gerenciador de Datas</strong></div>
+    <nav>
+        <a th:href="@{/products}" class="btn btn-ghost">Produtos</a>
+        <a th:href="@{/logout}" class="btn btn-ghost">Sair</a>
+    </nav>
+</header>
+
+<div class="container" th:fragment="content">
+    <!-- Aqui o conteúdo das páginas filhas vai entrar -->
+</div>
+
+</body>
+</html>

@@ -8,13 +8,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 @Repository
-public interface UserRepository extends JpaRepository <UserModel, Integer>{
+public interface UserRepository extends JpaRepository<UserModel, Integer> {
+
+    Optional<UserModel> findByUserName(String userName);
+
     @Modifying
     @Transactional
     @Query("UPDATE UserModel u SET u.userName = :userName, u.password = :password WHERE u.id = :id")
-    public int update(@Param("userName") String userName,
-                      @Param("password")String password,
-                      @Param("id")Integer id);
+    int update(@Param("userName") String userName,
+               @Param("password") String password,
+               @Param("id") Integer id);
 }

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Registrar</title></head>
+<body style="font-family:system-ui,sans-serif;display:grid;place-items:center;height:100vh;margin:0;">
+<form th:action="@{/register}" method="post" th:object="${user}" style="display:flex;flex-direction:column;gap:10px;width:320px;padding:24px;border:1px solid #e5e7eb;border-radius:12px;">
+    <h2>Criar conta</h2>
+    <input th:field="*{userName}" placeholder="Usuário" />
+    <input th:field="*{password}" type="password" placeholder="Senha" />
+    <button class="btn" style="background:#2563eb;color:#fff;border:0;padding:10px;border-radius:8px;">Registrar</button>
+    <p th:text="${msg}" th:if="${msg}"></p>
+</form>
+</body>
+</html>

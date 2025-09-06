@@ -1,0 +1,52 @@
+<head>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 0; }
+        header, .container { padding: 16px; }
+        header { background: #0f172a; color: #fff; display:flex; justify-content:space-between; align-items:center;}
+        .btn { padding: 8px 12px; border: 0; border-radius: 8px; cursor: pointer; }
+        .btn-primary { background: #2563eb; color: #fff; }
+        .btn-ghost { background: transparent; color: #fff; }
+        .btn-danger { background: #dc2626; color: #fff; }
+        .badge { padding: 2px 8px; border-radius: 999px; font-size: 12px; }
+        .badge-warn { background: #f59e0b; color: #111827; }
+        .badge-danger { background: #ef4444; color: #fff; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border-bottom: 1px solid #e5e7eb; }
+        tr.soon { background: #fff7ed; }
+        tr.very-soon { background: #fef2f2; }
+        .toolbar { display:flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+        input[type="text"], input[type="date"] { padding: 8px; border:1px solid #cbd5e1; border-radius:8px; }
+        form.inline { display:inline; }
+    </style>
+</head>
+
+<div th:fragment="content">
+    <h1 th:text="${product.id} == null ? 'Novo Produto' : 'Editar Produto'">Form</h1>
+
+    <form th:action="${product.id} == null ? @{/products} : @{'/products/' + ${product.id}}"
+          method="post" th:object="${product}" style="display:grid;gap:12px;max-width:520px;">
+        <div>
+            <label>Nome</label><br/>
+            <input th:field="*{name}" placeholder="Nome do produto" required />
+        </div>
+
+        <div>
+            <label>Código de barras</label><br/>
+            <input th:field="*{barcode}" placeholder="EAN/UPC" required />
+        </div>
+
+        <div>
+            <label>Validade</label><br/>
+            <input th:field="*{validity}" type="date" required />
+        </div>
+
+        <div th:if="${product.id != null}">
+            <input type="hidden" name="_method" value="put"/>
+        </div>
+
+        <div style="display:flex;gap:8px;">
+            <button class="btn btn-primary" type="submit" th:text="${product.id} == null ? 'Salvar' : 'Atualizar'">Salvar</button>
+            <a th:href="@{/products}" class="btn">Cancelar</a>
+        </div>
+    </form>
+</div>

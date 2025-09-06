@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
 import java.time.LocalDate;
 
 @Entity
@@ -15,18 +14,38 @@ public class ProductModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @jakarta.validation.constraints.NotBlank
     private String name;
+
+    @jakarta.validation.constraints.NotNull
     private LocalDate validity;
+
+    @jakarta.validation.constraints.NotBlank
+    @jakarta.persistence.Column(unique = true, length = 64)
+    private String barcode;
+
     @ManyToOne
     @JoinColumn(name = "id_user", nullable = false, foreignKey = @ForeignKey(name = "FK_PRODUCT_USER"))
     private UserModel user;
 
-    public ProductModel() {
+    @jakarta.persistence.Transient
+    private Long daysUntilExpiration; // campo temporário, não será persistido no banco
+
+    public Long getDaysUntilExpiration() {
+        return daysUntilExpiration;
     }
 
-    public ProductModel(String name, LocalDate validity, UserModel user) {
+    public void setDaysUntilExpiration(Long daysUntilExpiration) {
+        this.daysUntilExpiration = daysUntilExpiration;
+    }
+
+    public ProductModel() {}
+
+    public ProductModel(String name, LocalDate validity, String barcode, UserModel user) {
         this.name = name;
         this.validity = validity;
+        this.barcode = barcode;
         this.user = user;
     }
 
@@ -36,6 +55,7 @@ public class ProductModel {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", validity=" + validity +
+                ", barcode='" + barcode + '\'' +
                 ", user=" + user +
                 '}';
     }
@@ -62,6 +82,14 @@ public class ProductModel {
 
     public void setValidity(LocalDate validity) {
         this.validity = validity;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     public UserModel getUser() {

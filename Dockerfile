@@ -19,8 +19,7 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
 # Porta dinâmica do Render
-ENV PORT 8080
-ENV JAVA_TOOL_OPTIONS="-Dserver.port=$PORT"
+EXPOSE 8080
 
 EXPOSE $PORT
 

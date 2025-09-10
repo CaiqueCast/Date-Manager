@@ -1,4 +1,8 @@
+# ===============================
+# Dockerfile Spring Boot - Render & Railway
+# ===============================
 
+# Stage de build
 FROM maven:3.9.4-eclipse-temurin-17 AS build
 
 WORKDIR /app
@@ -18,10 +22,8 @@ WORKDIR /app
 # Copiando JAR do build
 COPY --from=build /app/target/*.jar app.jar
 
-# Porta dinâmica do Render
+# EXPOSE é só informativo, não precisa usar $PORT
 EXPOSE 8080
-
-EXPOSE $PORT
 
 # Comando para rodar o Spring Boot
 ENTRYPOINT ["java","-jar","app.jar"]

@@ -54,7 +54,12 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/products", true)
                 )
                 .logout(l -> l.logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll())
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**")); // se usar APIs REST separadas
+                .rememberMe(rm -> rm
+                        .key("churros")
+                        .tokenValiditySeconds(7 * 24 * 60 * 60)
+                        .userDetailsService(userDetailsService())
+                )
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"));
 
         return http.build();
     }

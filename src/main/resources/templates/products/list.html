@@ -1,76 +1,265 @@
 <head>
     <style>
-        body { font-family: system-ui, sans-serif; margin: 0; }
-        header, .container { padding: 16px; }
-        header { background: #0f172a; color: #fff; display:flex; justify-content:space-between; align-items:center;}
-        .btn { padding: 8px 12px; border: 0; border-radius: 8px; cursor: pointer; }
-        .btn-primary { background: #2563eb; color: #fff; }
-        .btn-ghost { background: transparent; color: #fff; }
-        .btn-danger { background: #dc2626; color: #fff; }
-        .badge { padding: 2px 8px; border-radius: 999px; font-size: 12px; }
-        .badge-warn { background: #f59e0b; color: #111827; }
-        .badge-danger { background: #ef4444; color: #fff; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 10px; border-bottom: 1px solid #e5e7eb; }
-        tr.soon { background: #fff7ed; }
-        tr.very-soon { background: #fef2f2; }
-        .toolbar { display:flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
-        input[type="text"], input[type="date"] { padding: 8px; border:1px solid #cbd5e1; border-radius:8px; }
-        form.inline { display:inline; }
+        /* RESET */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: system-ui, sans-serif;
+            background: #f7f7f7;
+            color: #333;
+            font-size: 16px;
+        }
+
+        /* APP WRAPPER */
+        .todo-app {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-height: 100vh;
+            background: #E7EAFB;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .app-header {
+            background: #2a2eab;
+            color: #fff;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-header h1 {
+            font-size: 3.5rem;
+        }
+
+        .app-header h1 a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* BARRA DE BUSCA */
+        .search-bar {
+            background: #ece6f0;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 1rem;
+            display: flex;
+            gap: 8px;
+        }
+
+        .search-bar button,
+        .search-bar a {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 3rem;
+            padding: 0.3rem 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-size: 3rem;
+        }
+
+        /* LISTA */
+        .todo-list {
+            flex: 1;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .todo-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        /* ---- ESTILOS DE ALERTA ---- */
+        .todo-item.sessenta {
+            background-color: #facc15; /* amarelo/laranja */
+            color: #000;
+        }
+
+        .todo-item.trinta {
+            background-color: #f97316; /* laranja avermelhado */
+            color: #000;
+        }
+
+        .todo-item.vencido {
+            background-color: #dc2626; /* vermelho vivo */
+            color: #000;
+        }
+
+        /* INFO */
+        .todo-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .todo-info h3 {
+            font-size: 3rem;
+            color: #200092;
+        }
+
+        .todo-info p {
+            font-size: 2rem;
+            color: #000;
+        }
+
+        /* AÇÕES */
+        .todo-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .todo-actions button,
+        .todo-actions a {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 3rem;
+            color: #2a2eab;
+            text-decoration: none;
+        }
+
+        .todo-actions .danger {
+            color: #dc2626;
+        }
+
+        /* BOTÃO FLUTUANTE */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: #9395d3;
+            color: #fff;
+            font-size: 5rem;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            cursor: pointer;
+        }
+
+
+        /* NAV BAR INFERIOR */
+        .bottom-nav {
+            background: #fff;
+            padding: 0.8rem;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .bottom-nav a {
+            border: none;
+            background: transparent;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #333;
+            text-decoration: none;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (min-width: 767px) {
+            .todo-app {
+                max-width: 100% !important;
+                min-height: 100%;
+                width: 100% !important;
+                border-radius: 0;
+                box-shadow: none;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .todo-app {
+                max-width: 800px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .todo-app {
+                max-width: 1200px;
+            }
+            body { font-size: 18px; }
+            .app-header h1 { font-size: 1.9rem; }
+            .todo-info h3 { font-size: 1.3rem; }
+            .todo-info p { font-size: 1rem; }
+        }
     </style>
 </head>
 
-<div th:fragment="content">
-    <h1>Produtos</h1>
-    <div class="toolbar">
-        <form th:action="@{/products}" method="get" style="display:flex;gap:8px;">
-            <input type="text" name="q" th:value="${q}" placeholder="Buscar por nome ou código de barras" />
-            <button class="btn btn-primary">Buscar</button>
-            <a th:href="@{/products}" class="btn">Limpar</a>
-        </form>
+<div th:fragment="content" class="todo-app">
+    <header class="app-header">
+        <h1><a th:href="@{/products}">Produtos</a></h1>
+    </header>
 
-        <div style="margin-left:auto; display:flex; gap:8px;">
-            <a th:href="@{/products(filter='1m')}" class="btn">Vencem em 1 mês</a>
-            <a th:href="@{/products(filter='2m')}" class="btn">Vencem em 2 meses</a>
-            <a th:href="@{/products/new}" class="btn btn-primary">+ Novo Produto</a>
-        </div>
-    </div>
+    <!-- Barra de busca -->
+    <form th:action="@{/products}" method="get" class="search-bar">
+        <input type="text" name="q" th:value="${q}" placeholder="Buscar por nome ou código de barras" />
+        <button type="submit">🔍</button>
+        <a th:href="@{/products}">❌</a>
+    </form>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Código de barras</th>
-            <th>Validade</th>
-            <th>Faltam</th>
-            <th>Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="p : ${products}"
-            th:classappend="${p.daysUntilExpiration} &lt;= 7 ? 'very-soon' : (${p.daysUntilExpiration} &lt;= 30 ? 'soon' : '')">
-            <td th:text="${p.name}">Nome</td>
-            <td th:text="${p.barcode}">7890000000000</td>
-            <td th:text="${#temporals.format(p.validity, 'dd/MM/yyyy')}"??/??/???</td>
-            <td>
-                <span th:if="${p.daysUntilExpiration &lt; 0}" class="badge badge-danger">Vencido</span>
-                <span th:if="${p.daysUntilExpiration &gt;= 0}"
-                      th:text="${p.daysUntilExpiration} + ' dia' + (${p.daysUntilExpiration}==1 ? '' : 's')"></span>
-                <span th:if="${p.daysUntilExpiration &gt;= 0 and p.daysUntilExpiration &lt;= 30}" class="badge badge-danger">⚠ em até 30 dias</span>
-                <span th:if="${p.daysUntilExpiration &gt; 7 and p.daysUntilExpiration &lt;= 60}" class="badge badge-warn">⚠ em até 60 dias</span>
-            </td>
-            <td>
-                <a th:href="@{|/products/${p.id}/edit|}" class="btn">Editar</a>
+    <!-- Lista de produtos -->
+    <div class="todo-list">
+        <div th:each="p : ${products}"
+             th:class="'todo-item ' + (${p.daysUntilExpiration} < 0 ? 'vencido' : (${p.daysUntilExpiration} <= 30 ? 'trinta' : (${p.daysUntilExpiration} <= 60 ? 'sessenta' : '')))">
+            <div class="todo-info">
+                <h3 th:text="${p.name}">Nome</h3>
+                <p th:text="${p.barcode}">7890000000000</p>
+                <p th:text="${#temporals.format(p.validity, 'dd/MM/yyyy')}">??/??/????</p>
+                <p>
+                    <span th:if="${p.daysUntilExpiration < 0}" style="color:#fff;">Vencido</span>
+                    <span th:if="${p.daysUntilExpiration >= 0}"
+                          th:text="${p.daysUntilExpiration} + ' dia' + (${p.daysUntilExpiration}==1 ? '' : 's')"></span>
+                </p>
+            </div>
+            <div class="todo-actions">
+                <a th:href="@{|/products/${p.id}/edit|}">✏️</a>
                 <form class="inline" th:action="@{|/products/${p.id}/delete|}" method="post"
                       onsubmit="return confirm('Excluir este produto?');">
                     <input type="hidden" name="_method" value="delete"/>
-                    <button class="btn btn-danger" type="submit">Excluir</button>
+                    <button class="danger" type="submit">🗑️</button>
                 </form>
-            </td>
-        </tr>
-        <tr th:if="${#lists.isEmpty(products)}">
-            <td colspan="5">Nenhum produto encontrado.</td>
-        </tr>
-        </tbody>
-    </table>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(products)}" class="todo-item">
+            <div class="todo-info">
+                <h3>Nenhum produto encontrado.</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão flutuante -->
+    <a th:href="@{/products/new}" class="fab">
+        <img src="/images/bottomNew.png" alt="Adicionar" />
+    </a>
+
+    <!-- Filtros -->
+    <div class="bottom-nav">
+        <a th:href="@{/products(filter='1m')}">1 mês</a>
+        <a th:href="@{/products(filter='2m')}">2 meses</a>
+    </div>
 </div>

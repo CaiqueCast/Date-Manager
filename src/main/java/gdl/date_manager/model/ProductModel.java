@@ -21,7 +21,6 @@ public class ProductModel {
     @jakarta.validation.constraints.NotNull
     private LocalDate validity;
 
-    @jakarta.validation.constraints.NotBlank
     @jakarta.persistence.Column(unique = true, length = 64)
     private String barcode;
 

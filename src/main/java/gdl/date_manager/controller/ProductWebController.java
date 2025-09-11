@@ -76,9 +76,16 @@ public class ProductWebController {
         if (errors.hasErrors()) return "products/form";
         UserModel user = userRepo.findByUserName(auth.getName()).orElseThrow();
         product.setUser(user);
+
+        // 👇 Aqui: transforma "" em null
+        if (product.getBarcode() == null || product.getBarcode().isBlank()) {
+            product.setBarcode(null);
+        }
+
         productRepo.save(product);
         return "redirect:/products";
     }
+
 
     // Editar
     @GetMapping("/{id}/edit")
@@ -115,6 +122,10 @@ public class ProductWebController {
         existing.setName(product.getName());
         existing.setValidity(product.getValidity());
         existing.setBarcode(product.getBarcode());
+
+        if (existing.getBarcode() == null || existing.getBarcode().isBlank()) {
+            existing.setBarcode(null);
+        }
 
         productRepo.save(existing);
         return "redirect:/products";

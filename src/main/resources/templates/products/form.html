@@ -161,8 +161,13 @@ input
 
         <div>
             <label>Código de barras</label>
-            <input th:field="*{barcode}" placeholder="Código de Barras" required />
+            <input th:field="*{barcode}"
+                   type="text"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   placeholder="Código de Barras" />
         </div>
+
 
         <div>
             <label>Validade</label>

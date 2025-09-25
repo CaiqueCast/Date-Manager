@@ -239,7 +239,6 @@
                 <a th:href="@{|/products/${p.id}/edit|}">✏️</a>
                 <form class="inline" th:action="@{|/products/${p.id}/delete|}" method="post"
                       onsubmit="return confirm('Excluir este produto?');">
-                    <input type="hidden" name="_method" value="delete"/>
                     <button class="danger" type="submit">🗑️</button>
                 </form>
             </div>

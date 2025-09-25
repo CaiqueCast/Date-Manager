@@ -1,5 +1,7 @@
 # Stage de build
-FROM maven:3.9.4-eclipse-temurin-17 AS build
+FROM maven:3.9.4 AS build
+
+
 
 WORKDIR /app
 COPY pom.xml .

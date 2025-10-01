@@ -141,5 +141,4 @@ public class ProductWebController {
         return "redirect:/products";
     }
 
-    /* Helper disponível no template com ${#temporals} e lógica de destaque via Thymeleaf */
 }

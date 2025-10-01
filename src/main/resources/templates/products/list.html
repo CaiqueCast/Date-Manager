@@ -92,17 +92,22 @@
 
         /* ---- ESTILOS DE ALERTA ---- */
         .todo-item.sessenta {
-            background-color: #facc15; /* amarelo/laranja */
+            background-color: #ffd21e;
             color: #000;
         }
 
         .todo-item.trinta {
-            background-color: #f97316; /* laranja avermelhado */
+            background-color: #f87f29;
+            color: #000;
+        }
+
+        .todo-item.sete {
+            background-color: #fc5252;
             color: #000;
         }
 
         .todo-item.vencido {
-            background-color: #dc2626; /* vermelho vivo */
+            background-color: #dd1818;
             color: #000;
         }
 
@@ -224,7 +229,7 @@
     <!-- Lista de produtos -->
     <div class="todo-list">
         <div th:each="p : ${products}"
-             th:class="'todo-item ' + (${p.daysUntilExpiration} < 0 ? 'vencido' : (${p.daysUntilExpiration} <= 30 ? 'trinta' : (${p.daysUntilExpiration} <= 60 ? 'sessenta' : '')))">
+             th:class="'todo-item ' + (${p.daysUntilExpiration} < 0 ? 'vencido' : (${p.daysUntilExpiration} <= 7 ? 'sete' : (${p.daysUntilExpiration} <= 30 ? 'trinta' : (${p.daysUntilExpiration} <= 60 ? 'sessenta' : ''))))">
             <div class="todo-info">
                 <h3 th:text="${p.name}">Nome</h3>
                 <p th:text="${p.barcode}">7890000000000</p>
